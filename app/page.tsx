@@ -1,4 +1,11 @@
-import { Container, Filters, Title, TopBar } from "@/components/shared";
+import {
+  Container,
+  Filters,
+  ProductCard,
+  ProductsGroupList,
+  Title,
+  TopBar,
+} from "@/components/shared";
 
 export default function Home() {
   return (
@@ -10,7 +17,7 @@ export default function Home() {
       <TopBar />
 
       <Container className="mt-10 pb-14">
-        <div className="flex gap-[60px]">
+        <div className="flex gap-[80px]">
           {/* Фильтрация */}
           <div className="w-[250px]">
             <Filters />
@@ -19,15 +26,90 @@ export default function Home() {
           {/* Список товаров */}
           <div className="flex-1">
             <div className="flex flex-col gap-16">
-              Список товаров
-              {/* <ProductsGroupList
+              <ProductsGroupList
                 title="Пиццы"
-                items={[1, 2, 3, 4, 5]}
+                items={[
+                  {
+                    id: 1,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 2,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 3,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 4,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 5,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 6,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                ]}
+                categoryId={1}
               />
               <ProductsGroupList
                 title="Комбо"
-                items={[1, 2, 3, 4, 5]}
-              /> */}
+                items={[
+                  {
+                    id: 1,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 2,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 3,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 4,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 5,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                  {
+                    id: 6,
+                    name: "Чизбургер-пицца",
+                    imageUrl: "/pizza.webp",
+                    items: [{ price: 550 }],
+                  },
+                ]}
+                categoryId={2}
+              />
             </div>
           </div>
         </div>
