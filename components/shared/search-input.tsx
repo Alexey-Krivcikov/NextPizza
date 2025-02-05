@@ -55,6 +55,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
           className="rounded-2xl outline-none w-full bg-gray-100 pl-11"
           type="text"
           placeholder="Найти пиццу..."
+          value={searchQuery}
           onFocus={() => setFocused(true)}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
