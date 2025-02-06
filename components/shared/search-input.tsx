@@ -24,8 +24,13 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
   });
 
   useDebounce(
-    () => {
-      Api.products.search(searchQuery).then((items) => setProducts(items));
+    async () => {
+      try {
+        const response = await Api.products.search(searchQuery);
+        setProducts(response);
+      } catch (e) {
+        console.log(e);
+      }
     },
     250,
     [searchQuery]
@@ -35,7 +40,7 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
     setFocused(false);
     setSearchQuery("");
     setProducts([]);
-  }
+  };
 
   return (
     <>
