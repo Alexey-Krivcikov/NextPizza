@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import { Button } from "@/shared/components/ui";
@@ -14,6 +14,8 @@ import {
 } from "@/shared/components/ui";
 import { CartDrawerItem } from "./";
 import { getCartItemDetails } from "@/shared/lib";
+import { useCartStore } from "@/shared/store";
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
 
 interface Props {
   className?: string;
@@ -23,31 +25,47 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   className,
   children,
 }) => {
+  const { fetchCartItems, updateItemQuantity, removeCartItem, items, totalAmount } = useCartStore(state => state);
+  
+  const onClickCountButton = (id: number, quantity: number, type : 'plus' | 'minus') => {
+    const newQuatity = type === 'plus' ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuatity);
+  }
+
+  React.useEffect(() => {
+    fetchCartItems();
+  }, [fetchCartItems]);
+
   return (
     <Sheet>
       <SheetTrigger asChild={true}>{children}</SheetTrigger>
       <SheetContent className="flex flex-col justify-between pb-0 bg-[#F4F1EE]">
         <SheetHeader>
           <SheetTitle>
-            В корзине <span className="font-bold">3 товара</span>
+            В корзине <span className="font-bold">{items.length} товара</span>
           </SheetTitle>
         </SheetHeader>
 
         {/* Items */}
         <div className="-mx-6 mt-5 overflow-auto flex-1">
-          <div className="mb-2">
-            <CartDrawerItem
-              id={1}
-              imageUrl={"http://localhost:3000/images/chorizo.webp"}
-              details={getCartItemDetails(1, 20, [
-                { name: "Сыр" },
-                { name: "Чоризо" },
-              ])}
-              name={"Чоризо фреш"}
-              price={419}
-              quantity={1}
-            />
-          </div>
+          {items.map((item) => (
+            <div key={item.id} className="mb-2">
+              <CartDrawerItem
+                id={item.id}
+                imageUrl={item.imageUrl}
+                details={getCartItemDetails(
+                  item.ingredients,
+                  item.pizzaType as PizzaType,
+                  item.pizzaSize as PizzaSize
+                )}
+                name={item.name}
+                price={item.price}
+                quantity={item.quantity}
+                onClickRemove={() => removeCartItem(item.id)}
+                onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
+              />
+            </div>
+          ))}
         </div>
 
         <SheetFooter className="-mx-6 bg-white p-8">
@@ -58,7 +76,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
                 <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
               </span>
 
-              <span className="font-bold text-lg">500 ₽</span>
+              <span className="font-bold text-lg">{totalAmount} ₽</span>
             </div>
 
             <Link href="/cart">
