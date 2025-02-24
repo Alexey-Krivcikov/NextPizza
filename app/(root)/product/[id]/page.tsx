@@ -7,7 +7,9 @@ import {
 import { prisma } from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
+type tParams = Promise<{ id: string[] }>;
+
+export default async function ProductPage({ params }: { params: tParams }) {
   const { id } = await params;
   
   const product = await prisma.product.findUnique({
@@ -35,7 +37,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
           </p>
 
           <GroupVariants
-            selectedValue="2"
+            value="2"
             items={[
               {
                 name: "Маленькая",

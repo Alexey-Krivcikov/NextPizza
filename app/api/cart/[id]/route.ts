@@ -2,9 +2,11 @@ import { prisma } from "@/prisma/prisma-client";
 import { updateCartTotalAmount } from "@/shared/lib";
 import { NextRequest, NextResponse } from "next/server";
 
+type tParams = Promise<{ id: string[] }>;
+
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: tParams }
 ) {
   try {
     const { id } = await params;
@@ -50,7 +52,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: tParams }
 ) {
   try {
     const { id } = await params;

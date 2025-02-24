@@ -2,9 +2,11 @@ import { ChooseProductModal } from "@/shared/components/shared";
 import { prisma } from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 
-export default async function ProductModalPage({ params }: { params: { id: string } }) {
+type tParams = Promise<{ id: string[] }>;
+
+export default async function ProductModalPage( { params }: { params: tParams }) {
   const { id } = await params;
-  
+
   const product = await prisma.product.findFirst({
     where: { id: Number(id) },
     include: {
@@ -17,7 +19,5 @@ export default async function ProductModalPage({ params }: { params: { id: strin
     return notFound();
   }
 
-  return (
-    <ChooseProductModal product={product} />
-  );
+  return <ChooseProductModal product={product} />;
 }
