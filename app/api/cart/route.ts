@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
     const userCart = await findOrCreateCart(token);
     const data = (await req.json()) as CreateCartItemValues;
     
+    // TODO: доделать поиск питц с ингредиентами
     const findCartItem = await prisma.cartItem.findFirst({
       where: {
         cartId: userCart.id,

@@ -7,10 +7,12 @@ import {
 } from "@/shared/components/shared";
 import { findPizzas } from "@/shared/lib";
 import { GetSearchParams } from "@/shared/lib/find-pizzas";
+import React from "react";
 import { Suspense } from "react";
 
 export default async function Home({ searchParams } : { searchParams: GetSearchParams }) {
-  const categories = await findPizzas(searchParams);
+  const params = await searchParams;
+  const categories = await findPizzas(params);
 
   return (
     <>
