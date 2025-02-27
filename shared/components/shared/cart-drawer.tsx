@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button, SheetClose } from "@/shared/components/ui";
+import { Button, SheetClose, SheetDescription } from "@/shared/components/ui";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import {
@@ -18,13 +18,13 @@ import { useCartStore } from "@/shared/store";
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
 import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface Props {
   className?: string;
 }
 
 export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
-  className,
   children,
 }) => {
   const {
@@ -58,6 +58,9 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
             !totalAmount && "justify-center"
           )}
         >
+          <VisuallyHidden>
+            <SheetDescription>Товары в корзине</SheetDescription>
+          </VisuallyHidden>
           {totalAmount > 0 && (
             <SheetHeader>
               <SheetTitle>
@@ -69,6 +72,9 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
 
           {!totalAmount && (
             <div className="flex flex-col items-center justify-center w-72 mx-auto">
+              <VisuallyHidden>
+                <SheetTitle>Корзина</SheetTitle>
+              </VisuallyHidden>
               <Image
                 src="/images/empty-box.png"
                 alt="Empty cart"
@@ -85,7 +91,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
                 Добавьте хотя бы одну пиццу, чтобы совершить заказ
               </p>
 
-              <SheetClose>
+              <SheetClose asChild={true}>
                 <Button className="w-56 h-12 text-base" size="lg">
                   <ArrowLeft className="w-5 mr-2" />
                   Вернуться назад
