@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { ProductWithRelations } from "@/@types/prisma";
 import { useCartStore } from "@/shared/store";

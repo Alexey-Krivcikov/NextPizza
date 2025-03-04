@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import { Button, SheetClose, SheetDescription } from "@/shared/components/ui";
@@ -14,11 +14,11 @@ import {
 } from "@/shared/components/ui";
 import { CartDrawerItem, Title } from "./";
 import { getCartItemDetails } from "@/shared/lib";
-import { useCartStore } from "@/shared/store";
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
 import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useCart } from "@/shared/hooks";
 
 interface Props {
   className?: string;
@@ -28,12 +28,13 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   children,
 }) => {
   const {
-    fetchCartItems,
     updateItemQuantity,
     removeCartItem,
     items,
     totalAmount,
-  } = useCartStore((state) => state);
+  } = useCart();
+
+  const [redirecting, setredirecting] = React.useState(false); 
 
   const onClickCountButton = (
     id: number,
@@ -43,10 +44,6 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
     const newQuatity = type === "plus" ? quantity + 1 : quantity - 1;
     updateItemQuantity(id, newQuatity);
   };
-
-  React.useEffect(() => {
-    fetchCartItems();
-  }, [fetchCartItems]);
 
   return (
     <Sheet>
@@ -138,10 +135,10 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
                     <span className="font-bold text-lg">{totalAmount} ₽</span>
                   </div>
 
-                  <Link href="/cart">
+                  <Link href="/checkout">
                     <Button
-                      // onClick={() => setRedirecting(true)}
-                      // loading={redirecting}
+                      onClick={() => setredirecting(true)}
+                      loading={redirecting}
                       type="submit"
                       className="w-full h-12 text-base"
                     >
